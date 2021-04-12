@@ -10,12 +10,16 @@ import './styles/global.css';
 
 //import components
 import Header from './Components/Header';
+import Courses from './Components/Courses';
 
 function App() {
   return (
     <BrowserRouter>
       <div>
         <Header />
+        <Switch>
+          <Route exact path="/" render={() => <Courses />} />
+        </Switch>
       </div>
     </BrowserRouter>
   );
