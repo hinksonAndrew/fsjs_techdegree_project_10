@@ -11,6 +11,7 @@ import './styles/global.css';
 //import components
 import Header from './Components/Header';
 import Courses from './Components/Courses';
+import CourseDetail from './Components/CourseDetail';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Header />
         <Switch>
           <Route exact path="/" render={() => <Courses />} />
+          <Route path="/courses/:id" component={CourseDetail} />
         </Switch>
       </div>
     </BrowserRouter>
