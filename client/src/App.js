@@ -12,8 +12,10 @@ import './styles/global.css';
 import Header from './Components/Header';
 import Courses from './Components/Courses';
 import CourseDetail from './Components/CourseDetail';
+import CreateCourse from './Components/CreateCourse';
 import UserSignIn from './Components/UserSignIn';
 import UserSignUp from './Components/UserSignUp';
+
 
 function App() {
   return (
@@ -23,6 +25,7 @@ function App() {
         <Switch>
           <Route exact path="/" render={() => <Courses />} />
           <Route path="/courses/:id" component={CourseDetail} />
+          <Route path="/createcourse" component={CreateCourse} />
           <Route path="/signin" component={UserSignIn} />
           <Route path="/signup" component={UserSignUp} />
         </Switch>

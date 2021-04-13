@@ -1,54 +1,125 @@
-import React, { useState } from 'react';
+import React, { Component } from 'react';
+import Form from './Form';
 
-const UserSignUp = (props) => {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
-  const handleChange = (e) => {
-    console.log(e);
-    if (e.target.id === "firstName") {
-      setFirstName(e.target.value);
-    } else if (e.target.id === "lastName") {
-      setLastName(e.target.value);
-    } else if (e.target.id === "emailAddress") {
-      setEmail(e.target.value);
-    } else {
-      setPassword(e.target.value);
-    }
+export default class UserSignUp extends Component {
+  state = {
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    errors: []
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(firstName, lastName, email, password);
+  render() {
+    const {
+      firstName,
+      lastName,
+      email,
+      password,
+      confirmPassword,
+      errors
+    } = this.state;
+
+    return (
+      <div className="form--centered">
+        <h2>Sign Up</h2>
+        <Form 
+          cancel={this.cancel}
+          errors={errors}
+          submit={this.submit}
+          submitButtonText="Sign Up"
+          elements={() => (
+            <React.Fragment>
+              <label htmlFor="firstName">First Name</label>
+              <input 
+                id="firstName" 
+                name="firstName" 
+                type="text" 
+                value={firstName} 
+                onChange={this.change} />
+              <label htmlFor="lastName">Last Name</label>
+              <input 
+                id="lastName" 
+                name="lastName" 
+                type="text" 
+                value={lastName} 
+                onChange={this.change} />
+              <label htmlFor="emailAddress">Email Address</label>
+              <input 
+                id="emailAddress" 
+                name="emailAddress" 
+                type="email" 
+                value={email} 
+                onChange={this.change} />
+              <label htmlFor="password">Email Address</label>
+              <input 
+                id="password" 
+                name="password" 
+                type="password" 
+                value={password} 
+                onChange={this.change} />
+              <label htmlFor="confirmPassword">Email Address</label>
+              <input 
+                id="confirmPassword" 
+                name="confirmPassword" 
+                type="email" 
+                value={confirmPassword} 
+                onChange={this.change} />
+            </React.Fragment>
+          )}
+        />
+        <p>Already have a user account? Click here to <a href="/signin">sign in</a>!</p>
+      </div>
+    )
   }
 
-  const handleCancel = (e) => {
-    e.preventDefault();
-    props.history.push('/');
+  change = (event) => {
+    const name = event.target.name;
+    const value = event.target.value;
+
+    this.setState(() => {
+      return {
+        [name]: value
+      };
+    });
   }
 
-  return (
-    <div className="form--centered">
-      <h2>Sign Up</h2>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="firstName">First Name</label>
-        <input id="firstName" name="firstName" type="text" defaultValue="" onChange={handleChange} />
-        <label htmlFor="lastName">Last Name</label>
-        <input id="lastName" name="lastName" type="text" defaultValue="" onChange={handleChange} />
-        <label htmlFor="emailAddress">Email Address</label>
-        <input id="emailAddress" name="emailAddress" type="email" defaultValue="" onChange={handleChange} />
-        <label htmlFor="password">Password</label>
-        <input id="password" name="password" type="password" defaultValue="" onChange={handleChange} />
-        <label htmlFor="confirmPassword">Confirm Password</label>
-        <input id="confirmPassword" name="confirmPassword" type="password" defaultValue="" onChange={handleChange} />
-        <button className="button" type="submit">Sign Up</button>
-        <button className="button button-secondary" onClick={handleCancel}>Cancel</button>
-      </form>
-      <p>Already have a user account? Click here to <a href="/signin">sign in</a>!</p>
-    </div>
-  )
+  submit = () => {
+    const { context } = this.props;
+
+    const {
+      firstName,
+      lastName,
+      email,
+      password
+    } = this.state;
+
+    const user = {
+      firstName,
+      lastName,
+      email,
+      password
+    };
+
+    context.data.createUser(user)
+      .then( errors => {
+        if (errors.length) {
+          this.setState({ errors });
+        } else {
+          context.actions.signIn(email, password)
+            .then(() => {
+              this.props.history.push('/authenticated');
+            });
+        }
+      })
+      .catch( err => {
+        console.log(err);
+        this.props.history.push('/error');
+      });
+  }
+  
+  cancel = () => {
+    this.props.history.push('/');
+  }
 }
-
-export default UserSignUp;
