@@ -2,3 +2,4 @@
 .DS_Store
 client/package-lock.json
 *.html
+api/fsjstd-restapi.db

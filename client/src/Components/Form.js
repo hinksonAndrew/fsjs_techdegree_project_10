@@ -24,10 +24,8 @@ const Form = (props) => {
     <ErrorsDisplay errors={errors} />
     <form onSubmit={handleSubmit}>
       {elements()}
-      
       <button className="button" type="submit">{submitButtonText}</button>
       <button className="button button-secondary" onClick={handleCancel}>Cancel</button>
-      
     </form>
     </main>
   );

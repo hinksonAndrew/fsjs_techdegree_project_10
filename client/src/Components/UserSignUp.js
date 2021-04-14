@@ -5,7 +5,7 @@ export default class UserSignUp extends Component {
   state = {
     firstName: '',
     lastName: '',
-    email: '',
+    emailAddress: '',
     password: '',
     confirmPassword: '',
     errors: []
@@ -15,7 +15,7 @@ export default class UserSignUp extends Component {
     const {
       firstName,
       lastName,
-      email,
+      emailAddress,
       password,
       confirmPassword,
       errors
@@ -50,20 +50,20 @@ export default class UserSignUp extends Component {
                 id="emailAddress" 
                 name="emailAddress" 
                 type="email" 
-                value={email} 
+                value={emailAddress} 
                 onChange={this.change} />
-              <label htmlFor="password">Email Address</label>
+              <label htmlFor="password">Password</label>
               <input 
                 id="password" 
                 name="password" 
                 type="password" 
                 value={password} 
                 onChange={this.change} />
-              <label htmlFor="confirmPassword">Email Address</label>
+              <label htmlFor="confirmPassword">Confirm Password</label>
               <input 
                 id="confirmPassword" 
                 name="confirmPassword" 
-                type="email" 
+                type="password" 
                 value={confirmPassword} 
                 onChange={this.change} />
             </React.Fragment>
@@ -91,14 +91,14 @@ export default class UserSignUp extends Component {
     const {
       firstName,
       lastName,
-      email,
+      emailAddress,
       password
     } = this.state;
 
     const user = {
       firstName,
       lastName,
-      email,
+      emailAddress,
       password
     };
 
@@ -107,7 +107,7 @@ export default class UserSignUp extends Component {
         if (errors.length) {
           this.setState({ errors });
         } else {
-          context.actions.signIn(email, password)
+          context.actions.signIn(emailAddress, password)
             .then(() => {
               this.props.history.push('/authenticated');
             });
