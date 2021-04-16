@@ -68,7 +68,7 @@ export default class UserSignIn extends Component {
             return { errors: [ 'Sign-in was unsuccessful' ] };
           });
         } else {
-          //this.props.history.push('/authenticated'); -- need private routes
+          this.props.history.push('/');
           console.log(`SUCCESS! ${emailAddress} is now signed in!`);
         }
       })

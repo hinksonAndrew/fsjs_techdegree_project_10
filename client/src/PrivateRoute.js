@@ -3,6 +3,10 @@ import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { Consumer } from './Context';
 
+/**
+ * HOC for configuring routes that are protected
+ * Used for creating and updating courses.
+ */
 export default ({ component: Component, ...rest }) => {
   return (
     <Consumer>
