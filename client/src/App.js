@@ -21,6 +21,7 @@ import withContext from './Context';
 
 // link context with component
 const UserSignUpWithContext = withContext(UserSignUp);
+const UserSignInWithContext = withContext(UserSignIn);
 
 
 function App() {
@@ -32,7 +33,7 @@ function App() {
           <Route exact path="/" render={() => <Courses />} />
           <Route path="/courses/:id" component={CourseDetail} />
           <Route path="/createcourse" component={CreateCourse} />
-          <Route path="/signin" component={UserSignIn} />
+          <Route path="/signin" component={UserSignInWithContext} />
           <Route path="/signup" component={UserSignUpWithContext} />
         </Switch>
       </div>

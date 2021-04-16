@@ -16,15 +16,16 @@ export default class Data {
     }
 
     if (requiresAuth) {
-      const encodedCredentials = btoa(`${credentials.email}:${credentials.password}`);
+      const encodedCredentials = btoa(`${credentials.emailAddress}:${credentials.password}`);
       options.headers['Authorization'] = `Basic ${encodedCredentials}`;
     }
 
     return fetch(url, options);
   }
 
-  async getUser() {
-    const response = await this.api(`/users`, 'GET', null);
+  async getUser(emailAddress, password) {
+    console.log('getUser: ', emailAddress);
+    const response = await this.api(`/users`, 'GET', null, true, { emailAddress, password });
     if (response.status === 200) {
       return response.json().then(data => data);
     }
