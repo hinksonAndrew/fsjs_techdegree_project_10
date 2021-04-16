@@ -20,6 +20,7 @@ import UserSignUp from './Components/UserSignUp';
 import withContext from './Context';
 
 // link context with component
+const HeaderWithContext = withContext(Header);
 const UserSignUpWithContext = withContext(UserSignUp);
 const UserSignInWithContext = withContext(UserSignIn);
 
@@ -28,7 +29,7 @@ function App() {
   return (
     <BrowserRouter>
       <div>
-        <Header />
+        <HeaderWithContext />
         <Switch>
           <Route exact path="/" render={() => <Courses />} />
           <Route path="/courses/:id" component={CourseDetail} />
