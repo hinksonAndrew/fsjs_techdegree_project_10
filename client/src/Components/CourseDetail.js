@@ -1,12 +1,12 @@
 import React, {useState, useEffect} from 'react';
 import ReactMarkdown from 'react-markdown';
 
-const CourseDetail = ({match}) => {
+function CourseDetail(props) {
   const [course, setCourse] = useState([]);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-
-  const id = match.params.id;
+  
+  const id = props.match.params.id;
 
   useEffect(() => {
     fetch(`http://localhost:5000/api/courses/${id}`)
@@ -19,13 +19,24 @@ const CourseDetail = ({match}) => {
       .catch(error => console.log('Error fetching and parsing data', error));
   }, [id]);
 
+  let authorized = false;
+  if (course.userId === props.context.authenticatedUser.id) {
+    authorized = true;
+  }
+
   return (
     <main>
       <div className="actions--bar">
         <div className="wrap">
-          <a className="button" href="/updateCourse">Update Course</a>
-          <a className="button" href="/deleteCourse">Delete Course</a>
-          <a className="button button-secondary" href="/">Return to List</a>
+          {authorized ?
+          <div>
+            <a className="button" href="/updateCourse">Update Course</a>
+            <a className="button" href="/deleteCourse">Delete Course</a>
+            <a className="button button-secondary" href="/">Return to List</a>
+          </div>
+          :
+            <a className="button button-secondary" href="/">Return to List</a>
+          }
         </div>
       </div>
       <div className="wrap">

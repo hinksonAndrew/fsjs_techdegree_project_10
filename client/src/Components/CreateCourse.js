@@ -5,6 +5,7 @@ export default class CreateCourse extends Component {
   state = {
     title: '',
     courseAuthor: `${this.props.context.authenticatedUser.firstName} ${this.props.context.authenticatedUser.lastName}`,
+    userId: this.props.context.authenticatedUser.id,
     description: '',
     estimatedTime: '',
     materialsNeeded: '',
@@ -95,6 +96,7 @@ export default class CreateCourse extends Component {
     const {
       title,
       courseAuthor,
+      userId,
       description,
       estimatedTime,
       materialsNeeded
@@ -103,6 +105,7 @@ export default class CreateCourse extends Component {
     const course = {
       title,
       courseAuthor,
+      userId,
       description,
       estimatedTime,
       materialsNeeded
