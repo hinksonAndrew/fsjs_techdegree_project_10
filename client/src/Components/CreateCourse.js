@@ -1,21 +1,20 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import Form from './Form';
 
 export default class CreateCourse extends Component {
   state = {
-    courseTitle: '',
-    courseAuthor: '',
-    courseDescription: '',
+    title: '',
+    courseAuthor: `${this.props.context.authenticatedUser.firstName} ${this.props.context.authenticatedUser.lastName}`,
+    description: '',
     estimatedTime: '',
     materialsNeeded: '',
     errors: []
   }
   render() {
     const {
-      courseTitle,
+      title,
       courseAuthor,
-      courseDescription,
+      description,
       estimatedTime,
       materialsNeeded,
       errors
@@ -33,12 +32,12 @@ export default class CreateCourse extends Component {
             elements={() => (
               <React.Fragment>
                 <div>
-                  <label htmlFor="courseTitle">Course Title</label>
+                  <label htmlFor="title">Course Title</label>
                   <input
-                    id="courseTitle"
-                    name="courseTitle"
+                    id="title"
+                    name="title"
                     type="text"
-                    value={courseTitle}
+                    value={title}
                     onChange={this.change} />
                   <label htmlFor="courseAuthor">Course Author</label>
                   <input
@@ -47,12 +46,12 @@ export default class CreateCourse extends Component {
                     type="text"
                     value={courseAuthor}
                     onChange={this.change} />
-                  <label htmlFor="courseDescription">Course Description</label>
+                  <label htmlFor="description">Course Description</label>
                   <input
-                    id="courseDescription"
-                    name="courseDescription"
+                    id="description"
+                    name="description"
                     type="textarea"
-                    value={courseDescription}
+                    value={description}
                     onChange={this.change} />
                 </div>
                 <div>
@@ -91,28 +90,37 @@ export default class CreateCourse extends Component {
 
   submit = () => {
     const { context } = this.props;
+    const authUser = this.props.context.authenticatedUser;
 
     const {
-      courseTitle,
+      title,
       courseAuthor,
-      courseDescription,
+      description,
       estimatedTime,
       materialsNeeded
     } = this.state;
 
     const course = {
-      courseTitle,
+      title,
       courseAuthor,
-      courseDescription,
+      description,
       estimatedTime,
       materialsNeeded
     };
 
-    context.data.createCourse(course)
+    context.data.createCourse(course, authUser.email, authUser.password)
       .then (errors => {
         if (errors.length) {
           this.setState({ errors });
         } // need to finish this
       })
+      .catch( err => {
+        console.log(err);
+        this.props.history.push('/error');
+      })
+  }
+
+  cancel = () => {
+    this.props.history.push('/');
   }
 };
