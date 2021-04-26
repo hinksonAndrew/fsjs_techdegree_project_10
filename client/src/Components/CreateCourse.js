@@ -9,7 +9,7 @@ export default class CreateCourse extends Component {
     description: '',
     estimatedTime: '',
     materialsNeeded: '',
-    errors: []
+    errors: [],
   }
   render() {
     const {
@@ -114,10 +114,13 @@ export default class CreateCourse extends Component {
     context.data.createCourse(course, authUser.email, authUser.password)
       .then (errors => {
         if (errors.length) {
-          this.setState({ errors });
-        } // need to finish this
+          console.log("error: ", errors);
+          this.setState( {errors} );
+        } else {
+          this.props.history.push('/');
+        }
       })
-      .catch( err => {
+      .catch(err => {
         console.log(err);
         this.props.history.push('/error');
       })

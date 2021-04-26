@@ -5,6 +5,7 @@ function CourseDetail(props) {
   const [course, setCourse] = useState([]);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+  let [authorized, setAuthorized] = useState(false);
   
   const id = props.match.params.id;
 
@@ -15,23 +16,30 @@ function CourseDetail(props) {
         setCourse(data);
         setFirstName(data.User.firstName);
         setLastName(data.User.lastName);
+        if (props.context.authenticatedUser) {
+          if (course.userId === props.context.authenticatedUser.id) {
+            setAuthorized(true);
+          }
+        }
       })
       .catch(error => console.log('Error fetching and parsing data', error));
-  }, [id]);
+  }, [id, course.userId, props]);
 
-  let authorized = false;
-  if (course.userId === props.context.authenticatedUser.id) {
-    authorized = true;
+  function handleDeleteCourse(e) {
+    props.context.data.deleteCourse(id, props.context.authenticatedUser.email, props.context.authenticatedUser.password)
+      .then(() => {
+        props.history.push('/');
+      });
   }
-
+  
   return (
     <main>
       <div className="actions--bar">
         <div className="wrap">
           {authorized ?
           <div>
-            <a className="button" href="/updateCourse">Update Course</a>
-            <a className="button" href="/deleteCourse">Delete Course</a>
+            <a className="button" href={`${id}/update`}>Update Course</a>
+            <button className="button" onClick={handleDeleteCourse}>Delete Course</button>
             <a className="button button-secondary" href="/">Return to List</a>
           </div>
           :
