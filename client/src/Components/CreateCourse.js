@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import Form from './Form';
 
+/**
+ * Sets internal state for component and with the use of the Form.js component
+ * renders the form. Uses state to get userId of authenticated user.
+ */
 export default class CreateCourse extends Component {
   state = {
     title: '',
@@ -24,7 +28,7 @@ export default class CreateCourse extends Component {
     return (
       <div className="wrap">
         <h2>Create Course</h2>
-        <div className="main--flex">
+        
           <Form
             cancel={this.cancel}
             errors={errors}
@@ -32,6 +36,7 @@ export default class CreateCourse extends Component {
             submitButtonText="Create Course"
             elements={() => (
               <React.Fragment>
+              <div className="main--flex">
                 <div>
                   <label htmlFor="title">Course Title</label>
                   <input
@@ -48,12 +53,11 @@ export default class CreateCourse extends Component {
                     value={courseAuthor}
                     onChange={this.change} />
                   <label htmlFor="description">Course Description</label>
-                  <input
+                  <textarea
                     id="description"
                     name="description"
-                    type="textarea"
                     value={description}
-                    onChange={this.change} />
+                    onChange={this.change}></textarea>
                 </div>
                 <div>
                   <label htmlFor="estimatedTime">Estimated Time</label>
@@ -64,17 +68,17 @@ export default class CreateCourse extends Component {
                     value={estimatedTime}
                     onChange={this.change} />
                   <label htmlFor="materialsNeeded">Materials Needed</label>
-                  <input
+                  <textarea
                     id="materialsNeeded"
                     name="materialsNeeded"
-                    type="textarea"
                     value={materialsNeeded}
-                    onChange={this.change} />
+                    onChange={this.change}></textarea>
+                </div>
                 </div>
               </React.Fragment>
             )} />
           </div>
-        </div>
+        
     );
   };
 

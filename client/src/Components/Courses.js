@@ -3,6 +3,10 @@ import React, {useState, useEffect} from 'react';
 const Courses = () => {
   const [courses, setCourses] = useState([]);
 
+  /**
+   * Sends a request to the api to get all courses in database and sets 
+   * state of courses to what came back.
+   */
   useEffect(() => {
     fetch('http://localhost:5000/api/courses')
       .then(res => res.json())

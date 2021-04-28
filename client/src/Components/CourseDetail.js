@@ -1,6 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import ReactMarkdown from 'react-markdown';
 
+/**
+ * Renders the CourseDetail component
+ * @param {props} props 
+ * @returns 
+ */
 function CourseDetail(props) {
   const [course, setCourse] = useState([]);
   const [firstName, setFirstName] = useState('');
@@ -9,6 +14,12 @@ function CourseDetail(props) {
   
   const id = props.match.params.id;
 
+  /**
+   * Sends a request to the api using the id and returns the course needed. 
+   * Using context looks at the authorized user if there is one to set state
+   * to authorized to make sure page renders the update/delete correct and only
+   * for the authorized user.
+   */
   useEffect(() => {
     fetch(`http://localhost:5000/api/courses/${id}`)
       .then(res => res.json())
@@ -31,7 +42,9 @@ function CourseDetail(props) {
         props.history.push('/');
       });
   }
-  
+  /**
+   * Renders the course detail and only shows update/delete if the user is the author
+   */
   return (
     <main>
       <div className="actions--bar">

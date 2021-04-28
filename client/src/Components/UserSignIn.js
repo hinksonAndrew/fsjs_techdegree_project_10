@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import Form from './Form';
 
+/**
+ * Allows user to signin to get authorzied to update/delete their courses.
+ */
 export default class UserSignIn extends Component {
   state = {
     emailAddress: '',
@@ -47,6 +50,10 @@ export default class UserSignIn extends Component {
     );
   }
 
+  /**
+   * Updates state based on name of field.
+   * @param {event} event 
+   */
   change = (event) => {
     const name = event.target.name;
     const value = event.target.value;

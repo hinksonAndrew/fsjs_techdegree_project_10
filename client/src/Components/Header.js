@@ -1,6 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+/**
+ * Header Component
+ * Uses context to determine if an authorized user is present.
+ * If so header displays name of user and also shows sign out.
+ */
 export default class Header extends React.PureComponent {
   render() {
     const { context } = this.props;

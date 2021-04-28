@@ -1,5 +1,10 @@
 import React from 'react';
 
+/**
+ * This sets up the basic form skeleton for all of the forms used on the app.
+ * @param {props} props 
+ * @returns 
+ */
 const Form = (props) => {
   const {
     cancel,

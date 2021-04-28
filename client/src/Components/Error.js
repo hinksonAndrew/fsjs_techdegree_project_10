@@ -1,6 +1,9 @@
 /* eslint-disable import/no-anonymous-default-export */
 import React from 'react';
 
+/** 
+ * Renders error componenent
+ */
 export default () => {
   return (
     <main>

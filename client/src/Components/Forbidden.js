@@ -1,6 +1,9 @@
 /* eslint-disable import/no-anonymous-default-export */
 import React from 'react';
 
+/**
+ * Renders if a route is accessed by an un-authorized user.
+ */
 export default () => {
   return (
     <main>

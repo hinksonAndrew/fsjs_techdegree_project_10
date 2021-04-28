@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import Form from './Form';
 
+/**
+ * Renders a signup form that then sends all info to api to create a user using
+ * the signup action in context.
+ */
 export default class UserSignUp extends Component {
   state = {
     firstName: '',

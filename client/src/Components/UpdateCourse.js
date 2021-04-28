@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import Form from './Form';
 
+/**
+ * Gets values already present and allows user to update a course if they
+ * are the author of the course.
+ * @param {props} props 
+ * @returns 
+ */
 function UpdateCourse(props) {
 
   const [course, setCourse] = useState([]);
@@ -9,6 +15,10 @@ function UpdateCourse(props) {
   const id = props.match.params.id;
   const authUser = props.context.authenticatedUser;
 
+  /**
+   * Requests specific course info from API. If user that requested is not 
+   * the author then /forbidden path is pushed.
+   */
   useEffect(() => {
     fetch(`http://localhost:5000/api/courses/${id}`)
       .then(res => res.json())
@@ -22,7 +32,7 @@ function UpdateCourse(props) {
   }, [id, authUser, props]);
 
   function cancel(e) {
-    props.history.push('/');
+    props.history.push(`/courses/${id}`);
   }
 
   function submit(e) {
@@ -41,6 +51,10 @@ function UpdateCourse(props) {
       })
   }
 
+  /**
+   * Updates the state based on the name of the field.
+   * @param {event} e 
+   */
   function change(e) {
     const { name, value } = e.target;
 
@@ -50,7 +64,7 @@ function UpdateCourse(props) {
   return (
     <div className="wrap">
       <h2>Update Course</h2>
-      <div className="main--flex">
+      
         <Form
           cancel={cancel}
           errors={errors}
@@ -58,6 +72,7 @@ function UpdateCourse(props) {
           submitButtonText="Update Course"
           elements={() => (
             <React.Fragment>
+            <div className="main--flex">
               <div>
                 <label htmlFor="title">Course Title</label>
                 <input
@@ -74,12 +89,11 @@ function UpdateCourse(props) {
                   value={`${authUser.firstName} ${authUser.lastName}`}
                   onChange={change} />
                 <label htmlFor="description">Course Description</label>
-                <input
+                <textarea
                   id="description"
                   name="description"
-                  type="textarea"
                   value={course.description || ''}
-                  onChange={change} />
+                  onChange={change}></textarea>
               </div>
               <div>
                 <label htmlFor="estimatedTime">Estimated Time</label>
@@ -90,17 +104,16 @@ function UpdateCourse(props) {
                   value={course.estimatedTime || ''}
                   onChange={change} />
                 <label htmlFor="materialsNeeded">Materials Needed</label>
-                <input
+                <textarea
                   id="materialsNeeded"
                   name="materialsNeeded"
-                  type="textarea"
                   value={course.materialsNeeded || ''}
-                  onChange={change} />
+                  onChange={change}></textarea>
+              </div>
               </div>
             </React.Fragment>
           )} />
         </div>
-      </div>
   );
 };
 
